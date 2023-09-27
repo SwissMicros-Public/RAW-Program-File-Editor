@@ -10,7 +10,7 @@ The tool encodes to save the source code as a raw file.
 
 Read more about raw files:  [https://thomasokken.com/free42/importexport.html](https://thomasokken.com/free42/importexport.html)
 
-The editor is exposed on GitHub Pages: [https://michaelsteinmann.github.io/RAW-Program-File-Editor/](https://michaelsteinmann.github.io/RAW-Program-File-Editor/)
+The editor is exposed on GitHub Pages: [https://swissmicros-public.github.io/RAW-Program-File-Editor/](https://swissmicros-public.github.io/RAW-Program-File-Editor/)
 
 Collections of raw files: 
 - [https://technical.swissmicros.com/dm42/fat/PROGRAMS/](https://technical.swissmicros.com/dm42/fat/PROGRAMS/)
