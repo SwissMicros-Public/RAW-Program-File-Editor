@@ -1,0 +1,209 @@
+tt {
+	padding: 0 2px;
+	background-color: #eee;
+	border: 1px solid #999;
+}
+
+body {
+  font-family: Arial;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #efefef;
+  align-items: center;
+}
+.main {
+  padding: 3rem;
+}
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 1rem 2rem;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* table */
+.col1 {
+  width: 50%;
+}
+.col2 {
+  width: 20%;
+}
+.listing {
+  width: 100%;
+  height: 480px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  resize: none;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 14px;
+  font-weight: normal;
+}
+.font-12 {
+  font-size: 12px;
+}
+.actionheader {
+  padding: 6px;
+  background-color: #ccc;
+  margin-bottom: 10px;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.hdrlink {
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+}
+
+.hdrlink:hover {
+  color: black;
+  /* text-decoration: underline; */
+}
+
+.alert_custom {
+  margin-top: 2rem;
+  float: right;
+  position: absolute;
+  display: block;
+}
+
+/* alert */
+#myAlert {
+  visibility: hidden;
+  position: fixed;
+  color: white;
+  border-radius: 10px;
+  top: 0;
+  right: 0;
+  transform: translate(-15px, 15px);
+  background: #7fd628;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.myAlert-text-icon {
+  align-items: stretch;
+  box-shadow: 0 1px 1px rgb(10 10 10 / 10%);
+  display: flex;
+  max-width: 250px;
+}
+.myAlert-message {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  font-weight: 500;
+  padding: 15px 25px;
+}
+.close {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: 0 0;
+  border: none;
+  color: currentColor;
+  font-family: inherit;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+}
+#myAlert.show {
+  visibility: visible;
+}
+
+#myAlert.show {
+  animation: show 0.5s forwards;
+}
+
+@keyframes show {
+  0% {
+    transform: translate(-15px, 15px) scale(0);
+  }
+  50% {
+    transform: translate(-15px, 15px) scale(1.2);
+  }
+  70% {
+    transform: translate(-15px, 15px) scale(0.9);
+  }
+  100% {
+    transform: translate(-15px, 15px) scale(1);
+  }
+}
+
+#myAlertBar {
+  height: 2px;
+  background-color: #ddd;
+  color: white;
+}
+#myAlertProgress {
+  background-color: #f5f6f5;
+  width: 100%;
+}
+
+
+table.equivalents thead {
+	font-size: 14px;
+	color: white;
+	background-color: black;
+	text-align: center;
+}
+
+table.equivalents thead th {
+	font-weight: normal;
+	padding-left: 16px;
+	padding-right: 16px;
+  border-width: 2px;
+  border-color: white;
+}
+
+table.equivalents tbody td {
+	font-size: 14px;
+	font-family: monospace;
+	padding-left: 4px;
+	padding-right: 6px;
+	line-height: 16px;
+}
+
+table.equivalents tbody tr:nth-child(even) {
+	background-color: #eee;
+}
+
+

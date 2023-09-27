@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>decoder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+    <script src="./assets/js/jquery-3.7.0.min.js"></script>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- custom js -->
+    <script src="./assets/js/tabs.js"></script>
+    <script src="./assets/js/dm42.js"></script>
+    <script src="./assets/js/encoder.js"></script>
+    <script src="./assets/js/decoder.js"></script>
+    <script src="./assets/js/charset.js"></script>
+    <script src="./assets/js/dminitdata.js"></script>
+    <script src="./assets/js/dmopcodes.js"></script>
+    <script src="./assets/js/alert.js"></script>
+
+
+</head>
+
+<body>
+    <div class="header p-1">
+        <h2 class="ps-5 m-0">RAW Program File Editor for DM42/Free42</h2>
+        <img src="./assets/img/logo.svg" class="w-10 me-5" />
+    </div>
+    <div id="myAlert">
+        <div class="myAlert-text-icon">
+            <div class="myAlert-message">
+                Listing copied
+            </div>
+            <button class="close" onclick="hideAlert()">
+                <i class='bx bx-x'></i>
+            </button>
+        </div>
+        <div id="myAlertProgress">
+            <div id="myAlertBar"></div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'Encoder/Decoder');" id="defaultOpen">
+                Encoder/Decoder
+            </button>
+            <button class="tablinks" onclick="openCity(event, 'Instructions')">
+                Instructions
+            </button>
+            <button class="tablinks" onclick="openCity(event, 'Version History')">
+                Version History
+            </button>
+        </div>
+        <!-- Encoder/Encoder -->
+        <div id="Encoder/Decoder" class="tabcontent">
+            <h3>Encoder/Decoder</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col1">DM42 Listing: <a class="hdrlink" id="copylink" href="#" role="button"
+                                onclick="showAlert()">(copy to
+                                clipboard)</a></th>
+                        <th scope="col2">PC:</th>
+                        <th scope="col3">Hex Code:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col1" scope="row">
+                            <textarea spellcheck="false" class="listing" id="dm42listing"></textarea>
+                        </td>
+                        <td class="col2">
+                            <textarea spellcheck="false" class="listing" id="dm42pc" readonly></textarea>
+                        </td>
+                        <td class="col3">
+                            <textarea spellcheck="false" class="listing" id="dm42code"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="d-flex justify-content-center gap-3">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <input type="checkbox" id="translatecomments" role="button" />
+                                <label for="translatecomments" class="font-12" role="button">Translate comments</label>
+                                <input type="checkbox" id="greedycomment" role="button" />
+                                <label for="greedycomment" class="font-12" role="button">Greedy comments</label>
+                            </div>
+                            <div>
+                                <button type="button" id="clearsource" class="btn btn-primary">
+                                    Clear Listing
+                                </button>
+                                <button type="button" id="encodebutton" class="btn btn-primary">
+                                    Encode <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                                        <path fill-rule="evenodd"
+                                            d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="" colspan="2">
+                            <button type="button" id="decodebutton" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                    <path fill-rule="evenodd"
+                                        d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                </svg> Decode
+                            </button>
+                            <button type="button" id="clearhex" class="btn btn-primary">
+                                Clear hex
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="statusmessage">Status: <span id="statusText"></span></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="actionheader">
+                                Upload and decode <strong> .raw </strong> file:
+                            </div>
+                            <p class="instructions font-12">
+                                Select a <strong> .raw </strong> file to upload from your
+                                computer. It will be decoded and the corresponding listing
+                                displayed above.
+                            </p>
+                            <div>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="10000" />
+                                <input name="rawfile" type="file" id="rawfile" class="w-100 mb-2" />
+                                <button class="btn btn-primary" id="upload">
+                                    Upload...
+                                </button>
+                            </div>
+                            <div id="fileContent"></div>
+                        </td>
+                        <td>
+                            <div class="actionheader">
+                                Encode and download <strong> .raw </strong> file:
+                            </div>
+                            <p class="instructions font-12">
+                                Click on the <strong>Encode</strong> button to encode your
+                                program and then download it as a <strong> .raw </strong> file
+                                by clicking on the <strong>Download</strong> button.
+                            </p>
+                            <button type="button" id="downloadbutton" class="btn btn-primary">
+                                Download
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Instructions" class="tabcontent">
+            <div class="actionheader">
+                A few notes on program input:
+            </div>
+
+            <p>
+                Please note that you do not have to prefix a program that you enter with a line such as:<br><br>
+                <tt>00 { nn-Byte Prgm }</tt><br><br>
+                Nor do you have to enter line numbers. Both of these will be added automatically when you
+                click on the &quot;Encode&nbsp;&raquo;&quot; or &quot;&laquo;&nbsp;Decode&quot; button provided
+                there are no errors in your program or hex data.
+            </p>
+
+            <p>
+                Comments can be entered on the same line or after DM42 instructions. An '@' sign and
+                anything following it will be considered a comment and not contribute to the encoded raw data.
+                There is, however, some scope for ambiguity when an '@' sign appears inside a string, program
+                name or variable name. Take the following example:<br><br>
+                <tt>01 &quot;1&quot; @ &quot;1&quot; or &quot;2&quot;</tt><br><br>
+                Does this represent the string <tt>1&quot; @ &quot;1&quot; or &quot;2</tt> or does
+                it represent the string <tt>1</tt> followed by the comment <tt>@ &quot;1&quot; or
+                    &quot;2&quot;</tt>?
+            </p>
+
+            <p>
+                This is where the &quot;Greedy comments&quot; checkbox comes in. If it is checked, then the
+                parser will attempt to match as much of the program line as possible to a comment, and the above
+                line will be interpreted as the string <tt>1</tt> followed by the comment
+                <tt>@ &quot;1&quot; or &quot;2&quot;</tt>. If, on the other hand, the checkbox is <u>un</u>checked, then
+                the parser will try and match as much of the line as possible to actual program instructions,
+                meaning that the above example will be interpreted as the string
+                <tt>1&quot; @ &quot;1&quot; or &quot;2</tt>.
+            </p>
+
+            <p>
+                Special sequences such as <tt>\GS</tt> (see below) in comments can be translated to their Unicode
+                equivalents if the &quot;Translate comments&quot; checkbox is checked. E.g. if this is the case, then
+                the line:<br><br><tt>01 SQRT @ calculate \v/X</tt><br><br>...will be translated to:<br><br>
+                <tt>01 SQRT @ calculate √X</tt>
+            </p>
+
+            <p>
+                Many of the characters used in HP-42S/DM42 programs cannot be entered directly with a keyboard.
+                In order to help with this, we provide several special &quot;codes&quot; that you can use, and
+                there are also easy-to-type mnemonics for instructions that use them. This encoder also accepts
+                HP-41 style instructions, eg. you can type <tt>ST/&nbsp;10</tt> instead of <tt>STO&#x00f7;&nbsp;10</tt>
+                or <tt>RCL&nbsp;T</tt> instead of <tt>RCL&nbsp;ST&nbsp;T</tt>.
+            </p>
+
+            <p>
+                The table below shows what equivalent instructions you can use and also gives the HP-41 equivalent that
+                you can use if there is one. If you do use an HP-41 equivalent, it will subsequently be
+                &quot;translated&quot;
+                back to the HP-42S version in the final listing.
+            </p>
+            <table class="equivalents">
+                <thead>
+                    <tr>
+                        <th rowspan="2">In order to get:</th>
+                        <th colspan="2">You can type:</th>
+                    </tr>
+                    <tr>
+                        <th>HP-42S/DM42 style</th>
+                        <th>HP-41 style</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R&uarr;</td>
+                        <td>R^</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>R&darr;</td>
+                        <td>R\v or Rv</td>
+                        <td>RDN</td>
+                    </tr>
+                    <tr>
+                        <td>ENTER</td>
+                        <td>&nbsp;</td>
+                        <td>ENTER^</td>
+                    </tr>
+                    <tr>
+                        <td>Σ+, Σ-, CLΣ, PRΣ, ΣREG, ΣREG?</td>
+                        <td>\GS+, \GS-, CL\GS, \GSREG, \GSREG?<br>SUM+, SUM-, CLSUM, PRSUM, SUMREG, SUMREG?</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>X≠0?, X≤0?, X≥0?</td>
+                        <td>X#0?, X&lt;=0?, X&gt;=0?</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>├&quot;string&quot; (append to alpha)</td>
+                        <td>|-&quot;string&quot;</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>&rarr;POL, &rarr;REC</td>
+                        <td>\-&gt;POL, \-&gt;REC</td>
+                        <td>R-P, P-R</td>
+                    </tr>
+                    <tr>
+                        <td>&rarr;DEG, &rarr;RAD</td>
+                        <td>\-&gt;DEG, \-&gt;RAD</td>
+                        <td>R-D, D-R</td>
+                    </tr>
+                    <tr>
+                        <td>&rarr;OCT, &rarr;DEC</td>
+                        <td>\-&gt;OCT, \-&gt;DEC</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>+/-</td>
+                        <td></td>
+                        <td>CHS</td>
+                    </tr>
+                    <tr>
+                        <td>N!</td>
+                        <td></td>
+                        <td>FACT</td>
+                    </tr>
+                    <tr>
+                        <td>IP, FP</td>
+                        <td></td>
+                        <td>INT, FRC</td>
+                    </tr>
+                    <tr>
+                        <td>&rarr;HMS, &rarr;HR</td>
+                        <td>\-&gt;HMS, \-&gt;HR</td>
+                        <td>HMS, HR</td>
+                    </tr>
+                    <tr>
+                        <td>×, ÷</td>
+                        <td>x, /</td>
+                        <td>*, /</td>
+                    </tr>
+                    <tr>
+                        <td>STO+, STO-</td>
+                        <td></td>
+                        <td>ST+, ST-</td>
+                    <tr>
+                        <td>STO×, STO÷</td>
+                        <td>STO*, STO/</td>
+                        <td>ST*, ST/</td>
+                    </tr>
+                    <tr>
+                        <td>STO ST Y, STO IND ST Y</td>
+                        <td></td>
+                        <td>STO Y, STO IND Y</td>
+                        </td>
+                </tbody>
+            </table>
+
+            <p>
+                You will also need similar codes to type the special characters in strings, labels, and variable names:
+            </p>
+
+            <table class="equivalents">
+                <thead>
+                    <tr>
+                        <th>In order to get:</th>
+                        <th>You type (case-sensitive!):</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>÷</td>
+                        <td>\:-</td>
+                    </tr>
+                    <tr>
+                        <td>×</td>
+                        <td>\x</td>
+                    </tr>
+                    <tr>
+                        <td>√</td>
+                        <td>\v/</td>
+                    </tr>
+                    <tr>
+                        <td>∫</td>
+                        <td>\S</td>
+                    </tr>
+                    <tr>
+                        <td>▒</td>
+                        <td>\FUZ</td>
+                    </tr>
+                    <tr>
+                        <td>Σ</td>
+                        <td>\GS</td>
+                    </tr>
+                    <tr>
+                        <td>▸</td>
+                        <td>\|></td>
+                    </tr>
+                    <tr>
+                        <td>π</td>
+                        <td>\PI</td>
+                    </tr>
+                    <tr>
+                        <td>¿</td>
+                        <td>\?</td>
+                    </tr>
+                    <tr>
+                        <td>≤</td>
+                        <td>\&lt;=</td>
+                    </tr>
+                    <tr>
+                        <td>line feed</td>
+                        <td>[LF]</td>
+                    </tr>
+                    <tr>
+                        <td>≥</td>
+                        <td>\&gt;=</td>
+                    </tr>
+                    <tr>
+                        <td>≠</td>
+                        <td>\#</td>
+                    </tr>
+                    <tr>
+                        <td>↵</td>
+                        <td>\&lt;/</td>
+                    </tr>
+                    <tr>
+                        <td>&darr;</td>
+                        <td>\v</td>
+                    </tr>
+                    <tr>
+                        <td>&rarr;</td>
+                        <td>\-&gt;</td>
+                    </tr>
+                    <tr>
+                        <td>&larr;</td>
+                        <td>\&lt;-</td>
+                    </tr>
+                    <tr>
+                        <td>£</td>
+                        <td>\PND</td>
+                    </tr>
+                    <tr>
+                        <td>μ</td>
+                        <td>\m</td>
+                    </tr>
+                    <tr>
+                        <td>&deg;</td>
+                        <td>\o</td>
+                    </tr>
+                    <tr>
+                        <td>Å</td>
+                        <td>\Ao</td>
+                    </tr>
+                    <tr>
+                        <td>Ñ</td>
+                        <td>\N~</td>
+                    </tr>
+                    <tr>
+                        <td>Ä</td>
+                        <td>\A"</td>
+                    </tr>
+                    <tr>
+                        <td>∡</td>
+                        <td>\&lt;\</td>
+                    </tr>
+                    <tr>
+                        <td>ᴇ</td>
+                        <td>\E</td>
+                    </tr>
+                    <tr>
+                        <td>Æ</td>
+                        <td>\AE</td>
+                    </tr>
+                    <tr>
+                        <td>…</td>
+                        <td>\...</td>
+                    </tr>
+                    <tr>
+                        <td>Escape character</td>
+                        <td>[ESC]</td>
+                    </tr>
+                    <tr>
+                        <td>Ö</td>
+                        <td>\O"</td>
+                    </tr>
+                    <tr>
+                        <td>Ü</td>
+                        <td>\U"</td>
+                    </tr>
+                    <tr>
+                        <td>•</td>
+                        <td>\.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Version History" class="tabcontent">
+            <h3>Version History</h3>
+            <ul>
+                <li>
+                    <b>20230920</b> &minus; Converted to JavaScript only.
+                </li>
+                <li>
+                    <b>20201001</b> &minus; Moved to a server hosting all the decoder/encoders
+                </li>
+                <li>
+                    <b>20190828</b> &minus; Added support for decoding of synthetics in .raw data
+                </li>
+                <li>
+                    <b>20190827</b> &minus; Fixed separation and listing of multiple prgms in a RAW file and added XROM a,b support
+                </li>
+                <li>
+                    <b>20190629</b> &minus; Added support for LSTO local variables and for YMD date mode
+                </li>
+                <li>
+                    <b>20180218</b> &minus; Bugfix: Allow numbers not to be null-terminated in .raw files and allow leading zero to be omitted
+                </li>
+                <li>
+                    <b>20180112</b> &minus; Bugfix: jQuery-UI altered the font in the listing text areas. Fixed
+                </li>
+                <li>
+                    <b>20180106</b> &minus; Bugfix: encoder automatically translates typographical quotes, added tabs on decoder page
+                </li>
+                <li>
+                    <b>20170709</b> &minus; Added ability to comment code and program counter column, improved scrolling synchronization
+                </li>
+                <li>
+                    <b>20170707</b> &minus; Bugfix: final END no longer contributes to code length
+                </li>
+                <li><b>20170705</b> &minus; Initial release by SwissMicros as a PHP-based tool</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer"></div>
+</body>
+<script>
+    document.getElementById("defaultOpen").click();
+
+    var statusTextElement = document.getElementById("statusText");
+
+    if (status.success) {
+        statusTextElement.textContent = "OK";
+    } else {
+        var errorMsgSpan = document.createElement("span");
+        errorMsgSpan.className = "errormsg";
+        errorMsgSpan.textContent = status.error;
+        statusTextElement.appendChild(errorMsgSpan);
+    }
+
+
+</script>
+
+</html>
