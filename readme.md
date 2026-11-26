@@ -1,26 +1,13 @@
-# RAW Program File Editor 
+# RAW Program File Editor (archived)
 
-This repository contains a **RAW Program File Editor** for the DM42/Free42.
+This editor for DM42/Free42 `.raw` program files has been replaced by the
+**DM42 Encoder / Decoder**: <https://dm42decoder.swissmicros.com/>
 
-The editor is written in JavaScript and runs locally and offline in any browser.
+The new tool decodes and encodes the same files, with the same instructions and options
+(translate comments, greedy comments, HP-41 style input), and adds drag-and-drop upload,
+listing download and copy, and clearer error messages.
 
-After uploading a raw file from local storage, it gets decoded and displayed as source code in a text area ready for editing.
+The old address <https://swissmicros-public.github.io/RAW-Program-File-Editor/> now forwards there.
+All SwissMicros tools are listed at <https://tech.swissmicros.com/>.
 
-The tool encodes to save the source code as a raw file.
-
-Read more about raw files:  [https://thomasokken.com/free42/importexport.html](https://thomasokken.com/free42/importexport.html)
-
-The editor is exposed on GitHub Pages: [https://swissmicros-public.github.io/RAW-Program-File-Editor/](https://swissmicros-public.github.io/RAW-Program-File-Editor/)
-
-Collections of raw files: 
-- [https://technical.swissmicros.com/dm42/fat/PROGRAMS/](https://technical.swissmicros.com/dm42/fat/PROGRAMS/)
-- [https://thomasokken.com/free42/42progs/](https://thomasokken.com/free42/42progs/)
-
-The editor is still under development.
-
-To Do:
-
-- support more commands, i.e., [Plus42](https://thomasokken.com/plus42/#list)
-- enhance UI/UX
-- refactor code and files containing dm42 with something more meaningful, e.g. dm42listing -> programlisting
-- more testing
+This repository is archived and read-only. The last version of the editor is in the git history.
